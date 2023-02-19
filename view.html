@@ -1,0 +1,357 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, strink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="node_modules/bootstrap-social/bootstrap-social.css">
+        <title>Medical data : View</title>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.2.7/web3.min.js" integrity="sha512-yAmmVkOXqtDZRaueLdmLwMB67JtaRtjFzQGiAiJKvLiFlDvq4Tzm5R6uLcOMyvPRQlXpYHdYxc5IbiCwuquhUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+                    let account;
+        const connectMetamask = async () =>{
+            if(window.ethereum!=="undefined"){
+                const accounts = await ethereum.request({method:"eth_requestAccounts"});
+                account = accounts[0];
+                console.log(`account is ${account}`);
+            }
+        }
+
+        const connectContract = async() =>{
+            const ABI =[
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_Patientid",
+				"type": "uint256"
+			}
+		],
+		"name": "GetPatientinfo",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_Patientid",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_Name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_Gender",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_height",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_weight",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_phoneno",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_Address",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_emailid",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_description",
+				"type": "string"
+			}
+		],
+		"name": "setPatientinfo",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+];
+            const Address = "0x636D8eE9Ea8F0E43FA247Ff1f3b3Ee0E33efc7A3";
+            window.web3 = await new Web3(window.ethereum);
+            window.contract = await new window.web3.eth.Contract(ABI,Address);
+            console.log('connection success');
+        }
+
+        const GetPatientinfo = async() =>{
+            const id1 = document.getElementById("id1").value;
+            const data = await window.contract.methods.GetPatientinfo(id1).call();
+            document.getElementById("Name").innerHTML = `<b>${data[0]}</b>`;
+            document.getElementById("age").innerHTML = `<b>${data[1]}</b>`;
+            document.getElementById("gender").innerHTML = `<b>${data[2]}</b>`;
+            document.getElementById("height").innerHTML = `<b>${data[4]}</b>`;
+            document.getElementById("weight").innerHTML = `<b>${data[3]}</b>`;
+            document.getElementById("phn").innerHTML = `<b>${data[5]}</b>`;
+            document.getElementById("email").innerHTML = `<b>${data[6]}</b>`;
+            document.getElementById("Address").innerHTML = `<b>${data[7]}</b>`;
+            document.getElementById("description").innerHTML = `<b>${data[8]}</b>`;
+        }
+        connectMetamask();
+        connectContract();
+        </script>
+    </head>
+    <body>
+        <nav class="navbar navbar-dark navbar-expand-sm fixed-top">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand" href="./index.html"><img src="img/pngegg.png" height="30" width="40"></a>
+                <div class="collapse navbar-collapse" id="Navbar">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./index.html"><span class="fa fa-home"></span>  Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./Register.html"><span class="fa fa-info"></span>  Register The Patient</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="./view.html"><span class="fa fa-info"></span>  View Medical Records</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="./documentation.html"><span class="fa fa-info"></span>Documentation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./aboutus.html"><span class="fa fa-address-card"></span>  about us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    
+        <header class="jumbotron">
+            <div class="container">
+                <div class="row row-header">
+                    <div class="col-12 col-sm-6">
+                        <h1>Medical Record<sub><h6><b>By HAT STATIC</b></h6></sub></h1>
+                        <p>Easiest Way To Maintain The Patient Medical Records </p>
+                    </div>
+                    <!-- <img class="d-flex mr-3 img-thumbnail align-self-center" src="img/favpng_programmer-computer-programming-source-code.png" alt="alberto" height="200" width="200"> -->
+                </div>
+            </div>
+        </header>
+        <div class="container">
+            <div class="row">
+                <ol class="col-12 breadcrumb">
+                    <li class="breadcrumb-item"><a href="./index.html">Home</a></li>
+                    <li class="breadcrumb-item active">View</li>
+                </ol>
+                <div class="col col-sm col-md">
+                   <h3>View The Patient Data</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-9">
+            <form>
+                <div class="form-group row">
+                    <label for="Patient id" class="col-md-2 col-form-label">Patient ID</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" id="id1" name="id1" placeholder="Patient Id">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="offset-md-2 col-md-10">
+                        <input type="button" class="btn btn-primary" value="Get Info" id="View" onclick="GetPatientinfo()">
+                    </div>
+                </div>
+                <h6>If the page shows zero as result it means the id is wrong or doesn't exist</h6>
+            </form>
+        </div>
+        <div class="row row-content">
+            <div class="col-12 col-sm-9">
+                <h2>Patient Records</h2>
+                <div class="table-responsive">
+                     <table class="table table-striped">
+                         <thead class="thead-blue">
+                             <tr>
+                                 <th>Record</th>
+                                 <th>Details</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                             <!-- <tr>
+                                 <th>
+                                     Patient Id :
+                                 </th>
+                                 <td><div id="patientid"><b></b></div></td>
+                             </tr> -->
+                             <tr>
+                                <th>
+                                    Patient Name :
+                                </th>
+                                <td><div id="Name"></div></td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Patient Age :
+                                </th>
+                                <td><div id="age"></div></td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Patient Gender :
+                                </th>
+                                <td><div id="gender"></div></td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Patient Height :
+                                </th>
+                                <td><div id="height"></div></td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Patient weight :
+                                </th>
+                                <td><div id="weight"></div></td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Patient Phone No. :
+                                </th>
+                                <td><div id="phn"></div></td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Patient Address:
+                                </th>
+                                <td><div id="Address"></div></td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Patient Email id :
+                                </th>
+                                <td><div id="email"></div></td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Description :
+                                </th>
+                                <td><div id="description"></div></td>
+                            </tr>
+                         </tbody>
+                     </table>
+                </div>
+            </div>
+            <div class="col-12 col-sm-3">
+ 
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container">
+                <div class="row">             
+                    <div class="col-4 offset-1 col-sm-2">
+                        <h5>Links</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="./index.html">Home</a></li>
+                            <li><a href="./Register.html">Register Patient</a></li>
+                            <li><a href="./view.html">View Patient</a></li>
+                            <li><a href="./aboutus.html">About</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-7 col-sm-5">
+                        <h5>Our Address</h5>
+                        <address>
+                          Coimbatore<br>
+                          Tamil Nadu<br>
+                          India<br>
+                          Tel.: <a href="tel:+919025619966">90256-19966</a><br>
+                          Email: <a href="mailto:2026jb19@kgcas.com">2026jb19@kgcas.com</a>
+                       </address>
+                    </div>
+                    <div class="col-12 col-sm-4 align-self-center">
+                        <div class="text-center">
+                            <a class="btn btn-social-icon" href="http://google.com/+"><i class="fa fa-google"></i></a>
+                            <a class="btn btn-social-icon" href="http://www.facebook.com/profile.php?id="><i class="fa fa-facebook"></i></a>
+                            <a class="btn btn-social-icon" href="http://www.linkedin.com/in/"><i class="fa fa-linkedin"></i>                        </a>
+                            <a class="btn btn-social-icon" href="http://twitter.com/"><i class="fa fa-twitter"></i>                  </a>
+                            <a class="btn btn-social-icon" href="http://youtube.com/"><i class="fa fa-youtube"></i>                    </a>
+                            <a class="btn btn-social-icon" href="mailto:"><i class="fa fa-envelope"></i>                                 </a>
+                        </div>
+                    </div>
+               </div>
+               <div class="row justify-content-center">             
+                    <div class="col-auto">
+                        <p>© Copyright 2022 Medical Records</p>
+                    </div>
+               </div>
+            </div>
+        </footer>
+        <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
+        <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+        <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    </body>
+</html>
